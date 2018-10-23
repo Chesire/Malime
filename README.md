@@ -3,6 +3,7 @@
 
 [//]: # (Add the link to the Play store)
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/66ef4a5fafff45aca8880c374a6f316c)](https://app.codacy.com/app/Chesire/Malime?utm_source=github.com&utm_medium=referral&utm_content=Chesire/Malime&utm_campaign=Badge_Grade_Settings)
 [![Build Status](https://app.bitrise.io/app/b9a83a0271f20f47/status.svg?token=5iXkOtZfs29XH4IaFFwYSQ&branch=master)](https://app.bitrise.io/app/b9a83a0271f20f47)
 
 [//]: # (Add pictures of the app 1 - 3)
