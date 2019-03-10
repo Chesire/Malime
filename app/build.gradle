@@ -38,6 +38,9 @@ android {
     dataBinding {
         enabled true
     }
+    androidExtensions {
+        experimental true
+    }
     lintOptions {
         disable 'ColorCasing',
                 'InvalidImport',
