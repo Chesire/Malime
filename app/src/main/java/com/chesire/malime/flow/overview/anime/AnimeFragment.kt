@@ -3,18 +3,23 @@ package com.chesire.malime.flow.overview.anime
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import com.chesire.malime.databinding.FragmentAnimeBinding
+import com.chesire.malime.flow.ViewModelFactory
 import dagger.android.support.DaggerFragment
+import timber.log.Timber
+import javax.inject.Inject
 
 class AnimeFragment : DaggerFragment() {
-    // @Inject
-    // lateinit var viewModelFactory: ViewModelFactory
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory
 
-    // private val viewModel by lazy {
-    //     ViewModelProviders
-    //         .of(this, viewModelFactory)
-    //         .get(AnimeViewModel::class.java)
-    // }
+    private val viewModel by lazy {
+        ViewModelProviders
+            .of(this, viewModelFactory)
+            .get(AnimeViewModel::class.java)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -24,15 +29,12 @@ class AnimeFragment : DaggerFragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        // viewModel.animeSeries.observe(
-        //     viewLifecycleOwner,
-        //     Observer {
-        //         val s = it
-        //         Timber.d("New series found")
-        //     }
-        // )
-
-        // viewModel.refresh()
+        viewModel.animeSeries.observe(
+            viewLifecycleOwner,
+            Observer {
+                Timber.d("Anime has been updated, new count [${it.count()}]")
+            }
+        )
     }
 
     companion object {
