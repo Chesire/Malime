@@ -21,8 +21,23 @@
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
         android:textAlignment="center"
+        app:layout_constraintBottom_toTopOf="@+id/adapterItemAnimePlusOne"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/adapterItemAnimeImage"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0"
         tools:text="Anime Series Title" />
+
+    <ImageButton
+        android:id="@+id/adapterItemAnimePlusOne"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:background="@android:color/transparent"
+        android:padding="8dp"
+        android:src="@drawable/ic_exposure_plus_1_black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.5" />
 </androidx.constraintlayout.widget.ConstraintLayout>
