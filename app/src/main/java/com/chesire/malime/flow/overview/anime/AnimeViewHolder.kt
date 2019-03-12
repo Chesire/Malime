@@ -16,7 +16,7 @@ class AnimeViewHolder(view: View) : RecyclerView.ViewHolder(view), LayoutContain
 
     fun bind(model: SeriesModel) {
         Glide.with(itemView)
-            .load(model.coverImage.largest)
+            .load(model.posterImage.smallest?.url)
             .into(adapterItemAnimeImage)
         adapterItemAnimeTitle.text = model.title
         adapterItemAnimePlusOne.visibleIf(invisible = true) { model.progress == model.totalLength }

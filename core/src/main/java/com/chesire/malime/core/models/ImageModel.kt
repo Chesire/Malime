@@ -20,6 +20,20 @@ data class ImageModel(
             }
         }
 
+    /**
+     * The smallest ImageData that contains a URL, returns null if no URL is valid.
+     */
+    val smallest: ImageData?
+        get() {
+            return when {
+                tiny.url.isNotEmpty() -> tiny
+                small.url.isNotEmpty() -> small
+                medium.url.isNotEmpty() -> medium
+                large.url.isNotEmpty() -> large
+                else -> null
+            }
+        }
+
     companion object {
         val empty
             get() = ImageModel(
