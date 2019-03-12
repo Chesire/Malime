@@ -6,6 +6,20 @@ data class ImageModel(
     val medium: ImageData,
     val large: ImageData
 ) {
+    /**
+     * The largest ImageData that contains a URL, returns null if no URL is valid.
+     */
+    val largest: ImageData?
+        get() {
+            return when {
+                large.url.isNotEmpty() -> large
+                medium.url.isNotEmpty() -> medium
+                small.url.isNotEmpty() -> small
+                tiny.url.isNotEmpty() -> tiny
+                else -> null
+            }
+        }
+
     companion object {
         val empty
             get() = ImageModel(
