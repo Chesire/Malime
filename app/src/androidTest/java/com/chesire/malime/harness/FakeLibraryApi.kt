@@ -7,11 +7,11 @@ import com.chesire.malime.core.models.SeriesModel
 
 class FakeLibraryApi : LibraryApi {
     override suspend fun retrieveAnime(userId: Int): Resource<List<SeriesModel>> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        TODO("not implemented")
     }
 
     override suspend fun retrieveManga(userId: Int): Resource<List<SeriesModel>> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        TODO("not implemented")
     }
 
     override suspend fun addAnime(
@@ -19,7 +19,7 @@ class FakeLibraryApi : LibraryApi {
         seriesId: Int,
         startingStatus: UserSeriesStatus
     ): Resource<SeriesModel> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        TODO("not implemented")
     }
 
     override suspend fun addManga(
@@ -27,7 +27,7 @@ class FakeLibraryApi : LibraryApi {
         seriesId: Int,
         startingStatus: UserSeriesStatus
     ): Resource<SeriesModel> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        TODO("not implemented")
     }
 
     override suspend fun update(
@@ -35,10 +35,10 @@ class FakeLibraryApi : LibraryApi {
         progress: Int,
         newStatus: UserSeriesStatus
     ): Resource<SeriesModel> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        TODO("not implemented")
     }
 
     override suspend fun delete(userSeriesId: Int): Resource<Any> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        TODO("not implemented")
     }
 }

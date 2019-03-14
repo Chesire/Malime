@@ -6,6 +6,6 @@ import com.chesire.malime.core.models.UserModel
 
 class FakeUserApi : UserApi {
     override suspend fun getUserDetails(): Resource<UserModel> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        TODO("not implemented")
     }
 }
