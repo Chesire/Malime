@@ -1,14 +1,27 @@
 package com.chesire.malime
 
-import android.app.Application
 import com.chesire.malime.injection.components.DaggerTestComponent
+import com.chesire.malime.injection.components.TestComponent
+import dagger.android.AndroidInjector
+import dagger.android.support.DaggerApplication
+import io.mockk.mockk
 
 /**
  * Overridden application object that provides a dagger component.
  */
-class TestApplication : Application() {
-    var component = DaggerTestComponent
-        .builder()
-        .applicationContext(this)
-        .build()
+class TestApplication : DaggerApplication() {
+    lateinit var component: TestComponent
+
+    override fun applicationInjector(): AndroidInjector<out DaggerApplication> {
+        return DaggerTestComponent
+            .builder()
+            .applicationContext(this)
+            .authApi(mockk())
+            .libraryApi(mockk())
+            .userApi(mockk())
+            .build()
+            .also {
+                component = it
+            }
+    }
 }

@@ -5,17 +5,16 @@ import androidx.test.platform.app.InstrumentationRegistry.getInstrumentation
 import com.chesire.malime.R
 import com.chesire.malime.TestApplication
 import com.chesire.malime.core.api.AuthApi
-import com.chesire.malime.injection.components.DaggerTestComponent
 import com.schibsted.spain.barista.assertion.BaristaVisibilityAssertions.assertDisplayed
 import com.schibsted.spain.barista.interaction.BaristaClickInteractions.clickOn
 import com.schibsted.spain.barista.rule.BaristaRule
+import io.mockk.coEvery
 import org.junit.Before
 import org.junit.Ignore
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import javax.inject.Inject
-
 
 @RunWith(AndroidJUnit4::class)
 class OverviewActivityTests {
@@ -28,17 +27,16 @@ class OverviewActivityTests {
     @Before
     fun setUp() {
         val app = getInstrumentation().targetContext.applicationContext as TestApplication
-        app.component = DaggerTestComponent
-            .builder()
-            .applicationContext(app)
-            .build()
         app.component.inject(this)
     }
 
     @Test
     fun overviewStartsInAnimeView() {
         val auth = authApi
-
+        val s = ""
+        coEvery { auth.login("", "") } throws NullPointerException()
+        // coEvery { authApi.login("", "") } coAnswers { Resource.Success(Any()) }
+        val t = ""
         overviewActivity.launchActivity()
         assertDisplayed(R.string.nav_anime)
     }
