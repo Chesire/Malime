@@ -6,7 +6,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.chesire.malime.R
 import com.chesire.malime.core.models.SeriesModel
 
-class AnimeAdapter : RecyclerView.Adapter<AnimeViewHolder>() {
+class AnimeAdapter(
+    private val listener: AnimeInteractionListener
+) : RecyclerView.Adapter<AnimeViewHolder>() {
     var animeItems = emptyList<SeriesModel>()
 
     fun loadItems(items: List<SeriesModel>) {
@@ -24,5 +26,6 @@ class AnimeAdapter : RecyclerView.Adapter<AnimeViewHolder>() {
 
     override fun onBindViewHolder(holder: AnimeViewHolder, position: Int) {
         holder.bind(animeItems[position])
+        holder.bindListener(listener)
     }
 }

@@ -4,18 +4,17 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.chesire.malime.core.models.SeriesModel
 import com.chesire.malime.databinding.FragmentAnimeBinding
 import com.chesire.malime.flow.ViewModelFactory
 import dagger.android.support.DaggerFragment
-import kotlinx.android.synthetic.main.fragment_anime.fragmentAnimeRecyclerView
 import timber.log.Timber
 import javax.inject.Inject
 
-class AnimeFragment : DaggerFragment() {
+class AnimeFragment : DaggerFragment(), AnimeInteractionListener {
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
     private lateinit var animeAdapter: AnimeAdapter
@@ -31,7 +30,7 @@ class AnimeFragment : DaggerFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        animeAdapter = AnimeAdapter()
+        animeAdapter = AnimeAdapter(this)
 
         return FragmentAnimeBinding.inflate(inflater, container, false)
             .apply {
@@ -53,6 +52,14 @@ class AnimeFragment : DaggerFragment() {
                 animeAdapter.loadItems(it)
             }
         )
+    }
+
+    override fun animeSelected(model: SeriesModel) {
+        Timber.i("Model ${model.slug} animeSelected called")
+    }
+
+    override fun onPlusOne(model: SeriesModel) {
+        Timber.i("Model ${model.slug} onPlusOne called")
     }
 
     companion object {

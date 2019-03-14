@@ -11,14 +11,22 @@ import kotlinx.android.synthetic.main.adapter_item_anime.adapterItemAnimePlusOne
 import kotlinx.android.synthetic.main.adapter_item_anime.adapterItemAnimeTitle
 
 class AnimeViewHolder(view: View) : RecyclerView.ViewHolder(view), LayoutContainer {
+    private lateinit var seriesModel: SeriesModel
     override val containerView: View?
         get() = itemView
 
     fun bind(model: SeriesModel) {
+        seriesModel = model
+
         Glide.with(itemView)
             .load(model.posterImage.smallest?.url)
             .into(adapterItemAnimeImage)
         adapterItemAnimeTitle.text = model.title
         adapterItemAnimePlusOne.visibleIf(invisible = true) { model.progress == model.totalLength }
+    }
+
+    fun bindListener(listener: AnimeInteractionListener) {
+        itemView.setOnClickListener { listener.animeSelected(seriesModel) }
+        adapterItemAnimePlusOne.setOnClickListener { listener.onPlusOne(seriesModel) }
     }
 }
