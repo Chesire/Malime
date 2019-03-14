@@ -6,7 +6,6 @@ import com.chesire.malime.db.RoomDB
 import dagger.Module
 import dagger.Provides
 import dagger.Reusable
-import javax.inject.Named
 
 @Suppress("unused")
 @Module
