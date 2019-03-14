@@ -6,7 +6,6 @@ import com.chesire.malime.db.RoomDB
 import dagger.Module
 import dagger.Provides
 import dagger.Reusable
-import javax.inject.Named
 
 @Suppress("unused")
 @Module
@@ -29,11 +28,4 @@ object DatabaseModule {
     @Reusable
     @JvmStatic
     fun provideUser(db: RoomDB) = db.user()
-
-    // use dummy value for now
-    @Suppress("FunctionOnlyReturningConstant")
-    @Provides
-    @Named("userId")
-    @JvmStatic
-    fun providesUserId() = 0
 }
