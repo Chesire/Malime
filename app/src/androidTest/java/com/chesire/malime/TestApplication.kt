@@ -4,7 +4,7 @@ import com.chesire.malime.injection.components.DaggerTestComponent
 import com.chesire.malime.injection.components.TestComponent
 import dagger.android.AndroidInjector
 import dagger.android.support.DaggerApplication
-import io.mockk.mockk
+import io.mockk.spyk
 
 /**
  * Overridden application object that provides a dagger component.
@@ -16,9 +16,9 @@ class TestApplication : DaggerApplication() {
         return DaggerTestComponent
             .builder()
             .applicationContext(this)
-            .authApi(mockk())
-            .libraryApi(mockk())
-            .userApi(mockk())
+            .authApi(spyk())
+            .libraryApi(spyk())
+            .userApi(spyk())
             .build()
             .also {
                 component = it

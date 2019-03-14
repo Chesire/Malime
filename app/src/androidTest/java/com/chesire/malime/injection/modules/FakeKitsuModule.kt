@@ -20,5 +20,4 @@ abstract class FakeKitsuModule {
 
     @Binds
     abstract fun providesFakeUserApi(fakeUserApi: FakeUserApi): UserApi
-
 }
