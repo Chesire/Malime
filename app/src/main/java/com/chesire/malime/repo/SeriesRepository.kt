@@ -48,7 +48,7 @@ class SeriesRepository @Inject constructor(
         val response = libraryApi.update(userSeriesId, progress, status)
         when (response) {
             is Resource.Success -> seriesDao.update(response.data)
-            is Resource.Error -> Timber.e("Error updating series [$userSeriesId]")
+            is Resource.Error -> Timber.e("Error updating series [$userSeriesId], ${response.msg}")
         }
 
         return response
