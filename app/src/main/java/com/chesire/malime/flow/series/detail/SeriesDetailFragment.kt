@@ -2,21 +2,45 @@ package com.chesire.malime.flow.series.detail
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
+import androidx.lifecycle.ViewModelProviders
 import com.chesire.malime.core.models.SeriesModel
 import com.chesire.malime.databinding.FragmentSeriesDetailBinding
-import com.chesire.malime.extensions.extra
+import com.chesire.malime.extensions.extraNotNull
+import com.chesire.malime.flow.ViewModelFactory
 import dagger.android.support.DaggerFragment
+import javax.inject.Inject
 
 class SeriesDetailFragment : DaggerFragment() {
-    private val model by extra<SeriesModel>(MODEL_KEY)
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory
+
+    private val model by extraNotNull<SeriesModel>(MODEL_KEY)
+    private val viewModel by lazy {
+        ViewModelProviders
+            .of(this, viewModelFactory)
+            .get(SeriesDetailViewModel::class.java)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ) = FragmentSeriesDetailBinding.inflate(inflater, container, false).root
+    ): View {
+        return FragmentSeriesDetailBinding.inflate(inflater, container, false)
+            .apply {
+                vm = viewModel
+                lifecycleOwner = viewLifecycleOwner
+            }
+            .root
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        viewModel.model = model
+    }
 
     companion object {
         const val TAG = "SeriesDetailFragment"
