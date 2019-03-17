@@ -1,10 +1,9 @@
-package com.chesire.malime.flow.overview
+package com.chesire.malime.flow
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry.getInstrumentation
 import com.chesire.malime.R
 import com.chesire.malime.TestApplication
-import com.chesire.malime.flow.OverviewActivity
 import com.schibsted.spain.barista.assertion.BaristaVisibilityAssertions.assertDisplayed
 import com.schibsted.spain.barista.interaction.BaristaClickInteractions.clickOn
 import com.schibsted.spain.barista.rule.BaristaRule
