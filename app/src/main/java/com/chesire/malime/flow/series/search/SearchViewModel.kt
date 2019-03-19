@@ -15,6 +15,7 @@ import com.chesire.malime.extensions.postSuccess
 import com.chesire.malime.repo.SeriesRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext
@@ -25,7 +26,7 @@ class SearchViewModel @Inject constructor(
     @IOContext private val ioContext: CoroutineContext
 ) : ViewModel() {
 
-    private val job = Job()
+    private val job = SupervisorJob()
     private val ioScope = CoroutineScope(job + ioContext)
     private val _searchResults = MutableLiveData<AsyncState<List<SeriesModel>, SearchError>>()
 

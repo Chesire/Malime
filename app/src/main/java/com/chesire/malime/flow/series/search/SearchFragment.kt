@@ -6,15 +6,19 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.chesire.malime.AsyncState
 import com.chesire.malime.databinding.FragmentSearchBinding
 import com.chesire.malime.flow.ViewModelFactory
 import dagger.android.support.DaggerFragment
+import kotlinx.android.synthetic.main.fragment_search.fragmentSearchRecyclerView
+import timber.log.Timber
 import javax.inject.Inject
 
 class SearchFragment : DaggerFragment() {
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
+    private lateinit var searchAdapter: SearchAdapter
 
     private val viewModel by lazy {
         ViewModelProviders
@@ -27,10 +31,17 @@ class SearchFragment : DaggerFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        searchAdapter = SearchAdapter()
+
         return FragmentSearchBinding.inflate(inflater, container, false)
             .apply {
                 vm = viewModel
                 lifecycleOwner = viewLifecycleOwner
+                fragmentSearchRecyclerView.apply {
+                    adapter = searchAdapter
+                    layoutManager = LinearLayoutManager(requireContext())
+                    setHasFixedSize(true)
+                }
             }
             .root
     }
@@ -42,7 +53,8 @@ class SearchFragment : DaggerFragment() {
             Observer {
                 when (it) {
                     is AsyncState.Success -> {
-                        // add to adapter
+                        Timber.d("Search results has been updated, new count [${it.data.count()}]")
+                        searchAdapter.loadItems(it.data)
                     }
                     is AsyncState.Error -> {
                         // perform error logic
