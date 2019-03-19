@@ -4,7 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import com.chesire.malime.AsyncState
 import com.chesire.malime.databinding.FragmentSearchBinding
 import com.chesire.malime.flow.ViewModelFactory
 import dagger.android.support.DaggerFragment
@@ -31,6 +33,26 @@ class SearchFragment : DaggerFragment() {
                 lifecycleOwner = viewLifecycleOwner
             }
             .root
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        viewModel.searchResults.observe(
+            viewLifecycleOwner,
+            Observer {
+                when (it) {
+                    is AsyncState.Success -> {
+                        // add to adapter
+                    }
+                    is AsyncState.Error -> {
+                        // perform error logic
+                    }
+                    is AsyncState.Loading -> {
+                        // show loading indicator
+                    }
+                }
+            }
+        )
     }
 
     companion object {
