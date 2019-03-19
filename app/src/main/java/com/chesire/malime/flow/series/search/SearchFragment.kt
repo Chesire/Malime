@@ -8,14 +8,15 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.chesire.malime.AsyncState
+import com.chesire.malime.core.flags.UserSeriesStatus
+import com.chesire.malime.core.models.SeriesModel
 import com.chesire.malime.databinding.FragmentSearchBinding
 import com.chesire.malime.flow.ViewModelFactory
 import dagger.android.support.DaggerFragment
-import kotlinx.android.synthetic.main.fragment_search.fragmentSearchRecyclerView
 import timber.log.Timber
 import javax.inject.Inject
 
-class SearchFragment : DaggerFragment() {
+class SearchFragment : DaggerFragment(), SearchInteractionListener {
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
     private lateinit var searchAdapter: SearchAdapter
@@ -31,7 +32,7 @@ class SearchFragment : DaggerFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        searchAdapter = SearchAdapter()
+        searchAdapter = SearchAdapter(this)
 
         return FragmentSearchBinding.inflate(inflater, container, false)
             .apply {
@@ -65,6 +66,12 @@ class SearchFragment : DaggerFragment() {
                 }
             }
         )
+    }
+
+    override fun addSeries(model: SeriesModel) {
+        Timber.i("Model ${model.slug} addSeries called")
+        // Default to UserSeriesStatus.Current for now
+        viewModel.addSeries(model, UserSeriesStatus.Current)
     }
 
     companion object {

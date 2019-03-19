@@ -6,7 +6,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.chesire.malime.R
 import com.chesire.malime.core.models.SeriesModel
 
-class SearchAdapter : RecyclerView.Adapter<SearchViewHolder>() {
+class SearchAdapter(
+    private val listener: SearchInteractionListener
+) : RecyclerView.Adapter<SearchViewHolder>() {
     private var searchItems = emptyList<SeriesModel>()
 
     fun loadItems(items: List<SeriesModel>) {
@@ -24,5 +26,6 @@ class SearchAdapter : RecyclerView.Adapter<SearchViewHolder>() {
 
     override fun onBindViewHolder(holder: SearchViewHolder, position: Int) {
         holder.bind(searchItems[position])
+        holder.bindListener(listener)
     }
 }

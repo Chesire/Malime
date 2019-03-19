@@ -24,20 +24,24 @@ class SeriesRepository @Inject constructor(
     val series: LiveData<List<SeriesModel>>
         get() = seriesDao.observe()
 
-    suspend fun addAnime(seriesId: Int, startingStatus: UserSeriesStatus) {
+    suspend fun addAnime(seriesId: Int, startingStatus: UserSeriesStatus): Resource<SeriesModel> {
         val response = libraryApi.addAnime(retrieveUserId(), seriesId, startingStatus)
         when (response) {
             is Resource.Success -> seriesDao.insert(response.data)
             is Resource.Error -> Timber.e("Error adding anime [$seriesId], ${response.msg}")
         }
+
+        return response
     }
 
-    suspend fun addManga(seriesId: Int, startingStatus: UserSeriesStatus) {
+    suspend fun addManga(seriesId: Int, startingStatus: UserSeriesStatus): Resource<SeriesModel> {
         val response = libraryApi.addManga(retrieveUserId(), seriesId, startingStatus)
         when (response) {
             is Resource.Success -> seriesDao.insert(response.data)
             is Resource.Error -> Timber.e("Error adding manga [$seriesId], ${response.msg}")
         }
+
+        return response
     }
 
     suspend fun refreshAnime() {

@@ -8,6 +8,7 @@ import com.chesire.malime.IOContext
 import com.chesire.malime.core.Resource
 import com.chesire.malime.core.api.SearchApi
 import com.chesire.malime.core.flags.SeriesType
+import com.chesire.malime.core.flags.UserSeriesStatus
 import com.chesire.malime.core.models.SeriesModel
 import com.chesire.malime.extensions.postError
 import com.chesire.malime.extensions.postLoading
@@ -56,6 +57,23 @@ class SearchViewModel @Inject constructor(
             is Resource.Error -> _searchResults.postError(SearchError.Error)
         }
     }
+
+    fun addSeries(model: SeriesModel, startingStatus: UserSeriesStatus) =
+        ioScope.launch {
+            val response = when (model.type) {
+                SeriesType.Anime -> repo.addAnime(model.id, startingStatus)
+                SeriesType.Manga -> repo.addManga(model.id, startingStatus)
+                else -> error("Unexpected series type provided")
+            }
+            when (response) {
+                is Resource.Success -> {
+                    // Notify back to UI
+                }
+                is Resource.Error -> {
+                    // Notify error back UI
+                }
+            }
+        }
 
     override fun onCleared() {
         super.onCleared()
