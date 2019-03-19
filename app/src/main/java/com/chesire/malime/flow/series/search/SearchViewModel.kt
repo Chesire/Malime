@@ -56,4 +56,9 @@ class SearchViewModel @Inject constructor(
             is Resource.Error -> _searchResults.postError(SearchError.Error)
         }
     }
+
+    override fun onCleared() {
+        super.onCleared()
+        job.cancel()
+    }
 }
