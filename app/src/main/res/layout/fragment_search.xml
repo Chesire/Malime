@@ -24,5 +24,14 @@
             app:title="Search"
             app:titleTextColor="@android:color/white" />
 
+        <EditText
+            android:id="@+id/fragmentSearchTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@={vm.searchTitle}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/fragmentSearchToolbar" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
