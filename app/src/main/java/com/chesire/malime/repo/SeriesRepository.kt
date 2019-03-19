@@ -21,11 +21,30 @@ class SeriesRepository @Inject constructor(
     val manga: LiveData<List<SeriesModel>>
         get() = seriesDao.observe(SeriesType.Manga)
 
+    val series: LiveData<List<SeriesModel>>
+        get() = seriesDao.observe()
+
+    suspend fun addAnime(seriesId: Int, startingStatus: UserSeriesStatus) {
+        val response = libraryApi.addAnime(retrieveUserId(), seriesId, startingStatus)
+        when (response) {
+            is Resource.Success -> seriesDao.insert(response.data)
+            is Resource.Error -> Timber.e("Error adding anime [$seriesId], ${response.msg}")
+        }
+    }
+
+    suspend fun addManga(seriesId: Int, startingStatus: UserSeriesStatus) {
+        val response = libraryApi.addManga(retrieveUserId(), seriesId, startingStatus)
+        when (response) {
+            is Resource.Success -> seriesDao.insert(response.data)
+            is Resource.Error -> Timber.e("Error adding manga [$seriesId], ${response.msg}")
+        }
+    }
+
     suspend fun refreshAnime() {
         val response = libraryApi.retrieveAnime(retrieveUserId())
         when (response) {
             is Resource.Success -> seriesDao.insert(response.data)
-            is Resource.Error -> Timber.e("Error refreshing anime")
+            is Resource.Error -> Timber.e("Error refreshing anime, ${response.msg}")
         }
     }
 
@@ -33,7 +52,7 @@ class SeriesRepository @Inject constructor(
         val response = libraryApi.retrieveManga(retrieveUserId())
         when (response) {
             is Resource.Success -> seriesDao.insert(response.data)
-            is Resource.Error -> Timber.e("Error refreshing manga")
+            is Resource.Error -> Timber.e("Error refreshing manga, ${response.msg}")
         }
     }
 
