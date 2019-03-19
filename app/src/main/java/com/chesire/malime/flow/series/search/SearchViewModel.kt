@@ -14,7 +14,6 @@ import com.chesire.malime.extensions.postLoading
 import com.chesire.malime.extensions.postSuccess
 import com.chesire.malime.repo.SeriesRepository
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 import javax.inject.Inject

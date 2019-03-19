@@ -7,7 +7,6 @@ import com.chesire.malime.core.api.UserApi
 import com.chesire.malime.kitsu.api.auth.KitsuAuth
 import com.chesire.malime.kitsu.api.library.KitsuLibrary
 import com.chesire.malime.kitsu.api.search.KitsuSearch
-import com.chesire.malime.kitsu.api.search.KitsuSearchService
 import com.chesire.malime.kitsu.api.user.KitsuUser
 import dagger.Binds
 import dagger.Module
