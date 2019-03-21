@@ -85,26 +85,6 @@ class SearchViewModelTests {
         }
     }
 
-    @Test(expected = IllegalStateException::class)
-    fun `performSearch with unknown seriesType throws error`() = runBlocking {
-        val mockRepo = mockk<SeriesRepository>()
-        val mockSearch = mockk<SearchApi> {
-            coEvery { searchForManga(any()) } returns Resource.Error("", 0)
-        }
-        val mockObserver = mockk<Observer<AsyncState<List<SeriesModel>, SearchError>>> {
-            every { onChanged(any()) } just Runs
-        }
-
-        SearchViewModel(mockRepo, mockSearch, testDispatcher).run {
-            searchResults.observeForever(mockObserver)
-            searchTitle.value = "Test"
-            seriesType = SeriesType.Unknown
-            performSearch()
-
-            coVerify { mockSearch.searchForManga("Test") }
-        }
-    }
-
     @Test
     fun `performSearch on success posts success with data`() = runBlocking {
         val expected = listOf<SeriesModel>(mockk())
