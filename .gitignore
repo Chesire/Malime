@@ -231,4 +231,6 @@ $RECYCLE.BIN/
 google-services.json
 Fastlane/report.xml
 .idea/caches/
+node_modules
+package-lock.json
 # End of custom
