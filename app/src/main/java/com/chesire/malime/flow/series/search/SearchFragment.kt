@@ -58,7 +58,7 @@ class SearchFragment : DaggerFragment(), SearchInteractionListener {
                         searchAdapter.loadItems(it.data)
                     }
                     is AsyncState.Error -> {
-                        // perform error logic
+                        Timber.w("Search failed: [${it.error}]")
                     }
                     is AsyncState.Loading -> {
                         // show loading indicator
