@@ -57,12 +57,8 @@ class SearchFragment : DaggerFragment(), SearchInteractionListener {
                         Timber.d("Search results has been updated, new count [${it.data.count()}]")
                         searchAdapter.loadItems(it.data)
                     }
-                    is AsyncState.Error -> {
-                        Timber.w("Search failed: [${it.error}]")
-                    }
-                    is AsyncState.Loading -> {
-                        // show loading indicator
-                    }
+                    is AsyncState.Error -> Timber.w("Search failed: [${it.error}]")
+                    is AsyncState.Loading -> Timber.v("Display load indicator")
                 }
             }
         )
