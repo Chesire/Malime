@@ -10,6 +10,7 @@ import com.chesire.malime.injection.modules.CoroutinesModule
 import com.chesire.malime.injection.modules.DatabaseModule
 import com.chesire.malime.injection.modules.KitsuModule
 import com.chesire.malime.injection.modules.ServerModule
+import com.chesire.malime.services.RefreshSeriesWorker
 import dagger.BindsInstance
 import dagger.Component
 import dagger.android.AndroidInjector
@@ -38,4 +39,6 @@ interface AppComponent : AndroidInjector<MalimeApplication> {
 
         fun build(): AppComponent
     }
+
+    fun inject(refreshSeriesWorker: RefreshSeriesWorker)
 }
