@@ -6,12 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.chesire.lifecyklelog.LogLifecykle
 import com.chesire.malime.core.models.SeriesModel
 import com.chesire.malime.databinding.FragmentAnimeBinding
 import com.chesire.malime.flow.ViewModelFactory
-import com.chesire.malime.flow.series.list.SeriesListener
 import dagger.android.support.DaggerFragment
 import timber.log.Timber
 import javax.inject.Inject
@@ -21,7 +21,6 @@ class AnimeFragment : DaggerFragment(), AnimeInteractionListener {
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
     private lateinit var animeAdapter: AnimeAdapter
-    private lateinit var seriesListener: SeriesListener
 
     private val viewModel by lazy {
         ViewModelProviders
@@ -44,7 +43,7 @@ class AnimeFragment : DaggerFragment(), AnimeInteractionListener {
                     setHasFixedSize(true)
                 }
                 fragmentAnimeFab.setOnClickListener {
-                    seriesListener.loadSearchFragment()
+                    findNavController().navigate(AnimeFragmentDirections.toSearchFragment())
                 }
             }
             .root
@@ -63,7 +62,7 @@ class AnimeFragment : DaggerFragment(), AnimeInteractionListener {
 
     override fun animeSelected(model: SeriesModel) {
         Timber.i("Model ${model.slug} animeSelected called")
-        seriesListener.loadDetailFragment(model)
+        findNavController().navigate(AnimeFragmentDirections.toSeriesDetailFragment(model))
     }
 
     override fun onPlusOne(model: SeriesModel) {
