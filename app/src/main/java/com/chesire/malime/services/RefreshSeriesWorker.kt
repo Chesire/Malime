@@ -11,6 +11,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.coroutineScope
 import javax.inject.Inject
 
+@Suppress("UnsafeCast")
 class RefreshSeriesWorker(
     appContext: Context,
     workerParams: WorkerParameters
