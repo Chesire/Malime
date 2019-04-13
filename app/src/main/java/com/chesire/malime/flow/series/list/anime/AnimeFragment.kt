@@ -34,10 +34,10 @@ class AnimeFragment : DaggerFragment(), AnimeInteractionListener {
     override fun onAttach(context: Context) {
         super.onAttach(context)
 
-        if (context !is SeriesListener) {
-            throw ClassCastException("Activity must implement SeriesListener")
-        }
-        seriesListener = context
+        // if (context !is SeriesListener) {
+        //     throw ClassCastException("Activity must implement SeriesListener")
+        // }
+        // seriesListener = context
     }
 
     override fun onCreateView(
