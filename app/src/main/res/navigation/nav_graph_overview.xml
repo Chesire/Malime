@@ -13,12 +13,26 @@
         android:id="@+id/animeFragment"
         android:name="com.chesire.malime.flow.series.list.anime.AnimeFragment"
         android:label="AnimeFragment"
-        app:layout="@layout/fragment_anime" />
+        app:layout="@layout/fragment_anime">
+        <action
+            android:id="@+id/toSeriesDetailFragment"
+            app:destination="@id/seriesDetailFragment" />
+        <action
+            android:id="@+id/toSearchFragment"
+            app:destination="@id/searchFragment" />
+    </fragment>
     <fragment
         android:id="@+id/mangaFragment"
         android:name="com.chesire.malime.flow.series.list.manga.MangaFragment"
         android:label="MangaFragment"
-        app:layout="@layout/fragment_manga" />
+        app:layout="@layout/fragment_manga">
+        <action
+            android:id="@+id/toSeriesDetailFragment"
+            app:destination="@id/seriesDetailFragment" />
+        <action
+            android:id="@+id/toSearchFragment"
+            app:destination="@id/searchFragment" />
+    </fragment>
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.chesire.malime.flow.profile.ProfileFragment"
@@ -33,7 +47,11 @@
         android:id="@+id/seriesDetailFragment"
         android:name="com.chesire.malime.flow.series.detail.SeriesDetailFragment"
         android:label="SeriesDetailFragment"
-        app:layout="@layout/fragment_series_detail" />
+        app:layout="@layout/fragment_series_detail">
+        <argument
+            android:name="series"
+            app:argType="com.chesire.malime.core.models.SeriesModel" />
+    </fragment>
     <fragment
         android:id="@+id/settingsFragment"
         android:name="com.chesire.malime.flow.settings.SettingsFragment"
