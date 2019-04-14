@@ -1,7 +1,7 @@
 package com.chesire.malime.services
 
+import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.WorkManager
-import androidx.work.WorkRequest
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
@@ -11,24 +11,37 @@ class WorkerQueueTests {
     @Test
     fun `enqueueSeriesRefresh enqueues the request on the manager`() {
         val mockWorkManager = mockk<WorkManager> {
-            every { enqueue(any<WorkRequest>()) } returns mockk()
+            every {
+                enqueueUniquePeriodicWork(
+                    "SeriesSync",
+                    ExistingPeriodicWorkPolicy.KEEP,
+                    any()
+                )
+            } returns mockk()
         }
 
         WorkerQueue(mockWorkManager).run {
             enqueueSeriesRefresh()
-            verify { mockWorkManager.enqueue(any<WorkRequest>()) }
+
+            verify {
+                mockWorkManager.enqueueUniquePeriodicWork(
+                    "SeriesSync",
+                    ExistingPeriodicWorkPolicy.KEEP,
+                    any()
+                )
+            }
         }
     }
 
     @Test
     fun `cancelEnqueued cancels the SeriesRefresh worker`() {
         val mockWorkManager = mockk<WorkManager> {
-            every { cancelAllWorkByTag("SeriesRefresh") } returns mockk()
+            every { cancelUniqueWork("SeriesSync") } returns mockk()
         }
 
         WorkerQueue(mockWorkManager).run {
             cancelQueued()
-            verify { mockWorkManager.cancelAllWorkByTag("SeriesRefresh") }
+            verify { mockWorkManager.cancelUniqueWork("SeriesSync") }
         }
     }
 }

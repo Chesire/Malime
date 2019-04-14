@@ -1,6 +1,7 @@
 package com.chesire.malime.services
 
 import androidx.work.Constraints
+import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.NetworkType
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
@@ -8,6 +9,7 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 private const val SERIES_REFRESH_TAG = "SeriesRefresh"
+private const val SERIES_UNIQUE_NAME = "SeriesSync"
 
 /**
  * Allows starting up workers.
@@ -25,13 +27,17 @@ class WorkerQueue @Inject constructor(private val workManager: WorkManager) {
             .addTag(SERIES_REFRESH_TAG)
             .build()
 
-        workManager.enqueue(request)
+        workManager.enqueueUniquePeriodicWork(
+            SERIES_UNIQUE_NAME,
+            ExistingPeriodicWorkPolicy.KEEP,
+            request
+        )
     }
 
     /**
      * Cancels any queued workers.
      */
     fun cancelQueued() {
-        workManager.cancelAllWorkByTag(SERIES_REFRESH_TAG)
+        workManager.cancelUniqueWork(SERIES_UNIQUE_NAME)
     }
 }
