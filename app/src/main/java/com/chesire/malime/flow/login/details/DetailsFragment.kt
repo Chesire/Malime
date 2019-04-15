@@ -1,13 +1,12 @@
 package com.chesire.malime.flow.login.details
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.findNavController
 import com.chesire.lifecyklelog.LogLifecykle
 import com.chesire.malime.databinding.FragmentDetailsBinding
 import com.chesire.malime.flow.ViewModelFactory
@@ -15,30 +14,15 @@ import dagger.android.support.DaggerFragment
 import timber.log.Timber
 import javax.inject.Inject
 
-/**
- * A simple [Fragment] subclass.
- * Use the [DetailsFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 @LogLifecykle
 class DetailsFragment : DaggerFragment() {
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
-    private lateinit var loginListener: LoginListener
 
-    private val viewModel: DetailsViewModel by lazy {
+    private val viewModel by lazy {
         ViewModelProviders
             .of(this, viewModelFactory)
             .get(DetailsViewModel::class.java)
-    }
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-
-        if (context !is LoginListener) {
-            throw ClassCastException("Activity must implement LoginListener")
-        }
-        loginListener = context
     }
 
     override fun onCreateView(
@@ -67,25 +51,11 @@ class DetailsFragment : DaggerFragment() {
                     DetailsViewModel.LoginStatus.Error -> Timber.i("LoginStatus returned error")
                     DetailsViewModel.LoginStatus.Success -> {
                         Timber.i("LoginStatus returned success")
-                        loginListener.onLoginSuccess()
+                        findNavController().navigate(DetailsFragmentDirections.toSyncingFragment())
                     }
                     null -> Timber.w("LoginStatus returned as null")
                 }
             }
         )
-    }
-
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @return A new instance of fragment DetailsFragment.
-         */
-        fun newInstance() = DetailsFragment()
-    }
-
-    interface LoginListener {
-        fun onLoginSuccess()
     }
 }

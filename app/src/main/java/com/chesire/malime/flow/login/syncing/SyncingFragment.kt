@@ -6,8 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.findNavController
 import com.chesire.lifecyklelog.LogLifecykle
 import com.chesire.malime.AsyncState
+import com.chesire.malime.databinding.FragmentSyncingBinding
 import com.chesire.malime.flow.ViewModelFactory
 import dagger.android.support.DaggerFragment
 import javax.inject.Inject
@@ -43,9 +45,9 @@ class SyncingFragment : DaggerFragment() {
             viewLifecycleOwner,
             Observer {
                 when (it) {
-                    is AsyncState.Success -> {
-                        // navigate out of the screen
-                    }
+                    is AsyncState.Success -> findNavController().navigate(
+                        SyncingFragmentDirections.actionSyncingFragmentToOverviewActivity()
+                    )
                     is AsyncState.Loading -> {
                         // display loading spinner
                     }
