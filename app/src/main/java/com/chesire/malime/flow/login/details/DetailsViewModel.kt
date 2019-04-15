@@ -1,4 +1,4 @@
-package com.chesire.malime.flow.login
+package com.chesire.malime.flow.login.details
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -14,7 +14,7 @@ import timber.log.Timber
 import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext
 
-class LoginViewModel @Inject constructor(
+class DetailsViewModel @Inject constructor(
     private val auth: AuthApi,
     private val user: UserRepository,
     @IOContext private val ioContext: CoroutineContext

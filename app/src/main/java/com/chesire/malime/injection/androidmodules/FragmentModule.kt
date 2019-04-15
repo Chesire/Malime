@@ -1,7 +1,7 @@
 package com.chesire.malime.injection.androidmodules
 
 import com.chesire.malime.flow.activity.ActivityFragment
-import com.chesire.malime.flow.login.LoginFragment
+import com.chesire.malime.flow.login.details.DetailsFragment
 import com.chesire.malime.flow.login.syncing.SyncingFragment
 import com.chesire.malime.flow.profile.ProfileFragment
 import com.chesire.malime.flow.series.detail.SeriesDetailFragment
@@ -22,7 +22,7 @@ abstract class FragmentModule {
     abstract fun contributeAnimeFragment(): AnimeFragment
 
     @ContributesAndroidInjector
-    abstract fun contributeLoginFragment(): LoginFragment
+    abstract fun contributeDetailsFragment(): DetailsFragment
 
     @ContributesAndroidInjector
     abstract fun contributeMangaFragment(): MangaFragment
