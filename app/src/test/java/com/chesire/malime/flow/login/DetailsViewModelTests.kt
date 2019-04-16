@@ -9,6 +9,7 @@ import com.chesire.malime.flow.login.details.DetailsViewModel
 import com.chesire.malime.repo.UserRepository
 import io.mockk.Runs
 import io.mockk.coEvery
+import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.just
 import io.mockk.mockk
@@ -33,17 +34,10 @@ class DetailsViewModelTests {
             every { onChanged(any()) } just Runs
         }
 
-        with(
-            DetailsViewModel(
-                mockAuth,
-                mockRepo,
-                testDispatcher
-            )
-        ) {
+        DetailsViewModel(mockAuth, mockRepo, testDispatcher).run {
             username.value = ""
             password.value = "password"
             loginStatus.observeForever(mockObserver)
-
             login()
         }
 
@@ -58,17 +52,10 @@ class DetailsViewModelTests {
             every { onChanged(any()) } just Runs
         }
 
-        with(
-            DetailsViewModel(
-                mockAuth,
-                mockRepo,
-                testDispatcher
-            )
-        ) {
+        DetailsViewModel(mockAuth, mockRepo, testDispatcher).run {
             username.value = "username"
             password.value = ""
             loginStatus.observeForever(mockObserver)
-
             login()
         }
 
@@ -87,17 +74,10 @@ class DetailsViewModelTests {
             every { onChanged(any()) } just Runs
         }
 
-        with(
-            DetailsViewModel(
-                mockAuth,
-                mockRepo,
-                testDispatcher
-            )
-        ) {
+        DetailsViewModel(mockAuth, mockRepo, testDispatcher).run {
             username.value = "username"
             password.value = "password"
             loginStatus.observeForever(mockObserver)
-
             login()
         }
 
@@ -113,61 +93,18 @@ class DetailsViewModelTests {
             coEvery { clearAuth() } coAnswers { }
         }
         val mockRepo = mockk<UserRepository> {
-            coEvery { retrieveRemoteUser() } coAnswers {
+            coEvery { refreshUser() } coAnswers {
                 Resource.Error("", 0)
             }
         }
 
-        with(
-            DetailsViewModel(
-                mockAuth,
-                mockRepo,
-                testDispatcher
-            )
-        ) {
+        DetailsViewModel(mockAuth, mockRepo, testDispatcher).run {
             username.value = "username"
             password.value = "password"
-
             login()
         }
 
-        verify {
-            runBlocking {
-                mockRepo.retrieveRemoteUser()
-            }
-        }
-    }
-
-    @Test
-    fun `getUser success inserts user into dao`() = runBlocking {
-        val expectedModel = mockk<UserModel>()
-        val mockAuth = mockk<AuthApi> {
-            coEvery { login(any(), any()) } coAnswers {
-                Resource.Success(Any())
-            }
-        }
-        val mockRepo = mockk<UserRepository> {
-            coEvery { retrieveRemoteUser() } coAnswers { Resource.Success(expectedModel) }
-        }
-
-        with(
-            DetailsViewModel(
-                mockAuth,
-                mockRepo,
-                testDispatcher
-            )
-        ) {
-            username.value = "username"
-            password.value = "password"
-
-            login()
-        }
-
-        verify {
-            runBlocking {
-                mockRepo.insertUser(expectedModel)
-            }
-        }
+        coVerify { mockRepo.refreshUser() }
     }
 
     @Test
@@ -179,24 +116,16 @@ class DetailsViewModelTests {
             }
         }
         val mockRepo = mockk<UserRepository> {
-            coEvery { retrieveRemoteUser() } coAnswers { Resource.Success(expectedModel) }
-            coEvery { insertUser(any()) } coAnswers { }
+            coEvery { refreshUser() } coAnswers { Resource.Success(expectedModel) }
         }
         val mockObserver = mockk<Observer<DetailsViewModel.LoginStatus>> {
             every { onChanged(any()) } just Runs
         }
 
-        with(
-            DetailsViewModel(
-                mockAuth,
-                mockRepo,
-                testDispatcher
-            )
-        ) {
+        DetailsViewModel(mockAuth, mockRepo, testDispatcher).run {
             username.value = "username"
             password.value = "password"
             loginStatus.observeForever(mockObserver)
-
             login()
         }
 
@@ -212,31 +141,20 @@ class DetailsViewModelTests {
             coEvery { clearAuth() } coAnswers { }
         }
         val mockRepo = mockk<UserRepository> {
-            coEvery { retrieveRemoteUser() } coAnswers { Resource.Error("") }
+            coEvery { refreshUser() } coAnswers { Resource.Error("") }
         }
         val mockObserver = mockk<Observer<DetailsViewModel.LoginStatus>> {
             every { onChanged(any()) } just Runs
         }
 
-        with(
-            DetailsViewModel(
-                mockAuth,
-                mockRepo,
-                testDispatcher
-            )
-        ) {
+        DetailsViewModel(mockAuth, mockRepo, testDispatcher).run {
             username.value = "username"
             password.value = "password"
             loginStatus.observeForever(mockObserver)
-
             login()
         }
 
-        verify {
-            runBlocking {
-                mockAuth.clearAuth()
-            }
-        }
+        coVerify { mockAuth.clearAuth() }
     }
 
     @Test
@@ -248,23 +166,16 @@ class DetailsViewModelTests {
             coEvery { clearAuth() } coAnswers { }
         }
         val mockRepo = mockk<UserRepository> {
-            coEvery { retrieveRemoteUser() } coAnswers { Resource.Error("") }
+            coEvery { refreshUser() } coAnswers { Resource.Error("") }
         }
         val mockObserver = mockk<Observer<DetailsViewModel.LoginStatus>> {
             every { onChanged(any()) } just Runs
         }
 
-        with(
-            DetailsViewModel(
-                mockAuth,
-                mockRepo,
-                testDispatcher
-            )
-        ) {
+        DetailsViewModel(mockAuth, mockRepo, testDispatcher).run {
             username.value = "username"
             password.value = "password"
             loginStatus.observeForever(mockObserver)
-
             login()
         }
 
