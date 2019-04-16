@@ -10,7 +10,6 @@ import com.chesire.malime.extensions.postError
 import com.chesire.malime.extensions.postLoading
 import com.chesire.malime.extensions.postSuccess
 import com.chesire.malime.repo.SeriesRepository
-import com.chesire.malime.repo.UserRepository
 import com.chesire.malime.services.WorkerQueue
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
@@ -20,7 +19,6 @@ import kotlin.coroutines.CoroutineContext
 
 class SyncingViewModel @Inject constructor(
     private val seriesRepo: SeriesRepository,
-    private val userRepo: UserRepository,
     private val workerQueue: WorkerQueue,
     @IOContext private val ioContext: CoroutineContext
 ) : ViewModel() {
@@ -34,11 +32,15 @@ class SyncingViewModel @Inject constructor(
     fun syncLatestData() = ioScope.launch {
         _syncStatus.postLoading()
 
-        // should do user as well
-        val syncCommands = listOf(seriesRepo.refreshAnime(), seriesRepo.refreshManga())
+        val syncCommands = listOf(
+            seriesRepo.refreshAnime(),
+            seriesRepo.refreshManga()
+        )
+
         if (syncCommands.any { it is Resource.Error }) {
             _syncStatus.postError(Any())
         } else {
+            workerQueue.enqueueSeriesRefresh()
             _syncStatus.postSuccess(Any())
         }
     }

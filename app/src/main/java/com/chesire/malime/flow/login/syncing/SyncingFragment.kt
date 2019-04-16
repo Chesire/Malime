@@ -12,6 +12,8 @@ import com.chesire.malime.AsyncState
 import com.chesire.malime.databinding.FragmentSyncingBinding
 import com.chesire.malime.flow.ViewModelFactory
 import dagger.android.support.DaggerFragment
+import kotlinx.android.synthetic.main.fragment_syncing.fragmentSyncingProgress
+import kotlinx.android.synthetic.main.fragment_syncing.fragmentSyncingRetryButton
 import javax.inject.Inject
 
 @LogLifecykle
@@ -34,6 +36,7 @@ class SyncingFragment : DaggerFragment() {
             .inflate(inflater, container, false)
             .apply {
                 lifecycleOwner = viewLifecycleOwner
+                fragmentSyncingRetryButton.setOnClickListener { viewModel.syncLatestData() }
             }
             .root
     }
@@ -45,14 +48,19 @@ class SyncingFragment : DaggerFragment() {
             viewLifecycleOwner,
             Observer {
                 when (it) {
-                    is AsyncState.Success -> findNavController().navigate(
-                        SyncingFragmentDirections.actionSyncingFragmentToOverviewActivity()
-                    )
+                    is AsyncState.Success -> {
+                        findNavController().navigate(
+                            SyncingFragmentDirections.actionSyncingFragmentToOverviewActivity()
+                        )
+                        activity?.finish()
+                    }
                     is AsyncState.Loading -> {
-                        // display loading spinner
+                        fragmentSyncingProgress.visibility = View.VISIBLE
+                        fragmentSyncingRetryButton.visibility = View.GONE
                     }
                     is AsyncState.Error -> {
-                        // display a retry button
+                        fragmentSyncingProgress.visibility = View.GONE
+                        fragmentSyncingRetryButton.visibility = View.VISIBLE
                     }
                 }
             }

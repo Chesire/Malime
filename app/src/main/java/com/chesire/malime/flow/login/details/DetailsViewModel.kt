@@ -7,6 +7,7 @@ import com.chesire.malime.IOContext
 import com.chesire.malime.core.Resource
 import com.chesire.malime.core.api.AuthApi
 import com.chesire.malime.repo.UserRepository
+import com.hadilq.liveevent.LiveEvent
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
@@ -21,7 +22,7 @@ class DetailsViewModel @Inject constructor(
 ) : ViewModel() {
     private val job = Job()
     private val ioScope = CoroutineScope(job + ioContext)
-    private val _loginStatus = MutableLiveData<LoginStatus>()
+    private val _loginStatus = LiveEvent<LoginStatus>()
     val username = MutableLiveData<String>()
     val password = MutableLiveData<String>()
     val loginStatus: LiveData<LoginStatus>
@@ -50,8 +51,7 @@ class DetailsViewModel @Inject constructor(
     }
 
     private suspend fun executeLogin(name: String, pw: String) {
-        val result = auth.login(name, pw)
-        when (result) {
+        when (val result = auth.login(name, pw)) {
             is Resource.Success -> executeGetUser()
             is Resource.Error -> {
                 Timber.e("Error logging in - [${result.code}] ${result.msg}")
@@ -61,12 +61,8 @@ class DetailsViewModel @Inject constructor(
     }
 
     private suspend fun executeGetUser() {
-        val result = user.retrieveRemoteUser()
-        when (result) {
-            is Resource.Success -> {
-                user.insertUser(result.data)
-                _loginStatus.postValue(LoginStatus.Success)
-            }
+        when (val result = user.refreshUser()) {
+            is Resource.Success -> _loginStatus.postValue(LoginStatus.Success)
             is Resource.Error -> {
                 Timber.e("Error getting user - [${result.code}] ${result.msg}")
                 auth.clearAuth()
