@@ -6,6 +6,7 @@ import com.chesire.malime.core.Resource
 import com.chesire.malime.core.api.AuthApi
 import com.chesire.malime.core.models.UserModel
 import com.chesire.malime.flow.login.details.DetailsViewModel
+import com.chesire.malime.flow.login.details.LoginStatus
 import com.chesire.malime.repo.UserRepository
 import io.mockk.Runs
 import io.mockk.coEvery
@@ -30,7 +31,7 @@ class DetailsViewModelTests {
     fun `empty username produces LoginStatus#EmptyUsername`() = runBlocking {
         val mockAuth = mockk<AuthApi>()
         val mockRepo = mockk<UserRepository>()
-        val mockObserver = mockk<Observer<DetailsViewModel.LoginStatus>> {
+        val mockObserver = mockk<Observer<LoginStatus>> {
             every { onChanged(any()) } just Runs
         }
 
@@ -41,14 +42,14 @@ class DetailsViewModelTests {
             login()
         }
 
-        verify { mockObserver.onChanged(DetailsViewModel.LoginStatus.EmptyUsername) }
+        verify { mockObserver.onChanged(LoginStatus.EmptyUsername) }
     }
 
     @Test
     fun `empty password produces LoginStatus#EmptyPassword`() = runBlocking {
         val mockAuth = mockk<AuthApi>()
         val mockRepo = mockk<UserRepository>()
-        val mockObserver = mockk<Observer<DetailsViewModel.LoginStatus>> {
+        val mockObserver = mockk<Observer<LoginStatus>> {
             every { onChanged(any()) } just Runs
         }
 
@@ -59,7 +60,7 @@ class DetailsViewModelTests {
             login()
         }
 
-        verify { mockObserver.onChanged(DetailsViewModel.LoginStatus.EmptyPassword) }
+        verify { mockObserver.onChanged(LoginStatus.EmptyPassword) }
     }
 
     @Test
@@ -70,7 +71,7 @@ class DetailsViewModelTests {
             }
         }
         val mockRepo = mockk<UserRepository>()
-        val mockObserver = mockk<Observer<DetailsViewModel.LoginStatus>> {
+        val mockObserver = mockk<Observer<LoginStatus>> {
             every { onChanged(any()) } just Runs
         }
 
@@ -81,7 +82,7 @@ class DetailsViewModelTests {
             login()
         }
 
-        verify { mockObserver.onChanged(DetailsViewModel.LoginStatus.Error) }
+        verify { mockObserver.onChanged(LoginStatus.Error) }
     }
 
     @Test
@@ -118,7 +119,7 @@ class DetailsViewModelTests {
         val mockRepo = mockk<UserRepository> {
             coEvery { refreshUser() } coAnswers { Resource.Success(expectedModel) }
         }
-        val mockObserver = mockk<Observer<DetailsViewModel.LoginStatus>> {
+        val mockObserver = mockk<Observer<LoginStatus>> {
             every { onChanged(any()) } just Runs
         }
 
@@ -129,7 +130,7 @@ class DetailsViewModelTests {
             login()
         }
 
-        verify { mockObserver.onChanged(DetailsViewModel.LoginStatus.Success) }
+        verify { mockObserver.onChanged(LoginStatus.Success) }
     }
 
     @Test
@@ -143,7 +144,7 @@ class DetailsViewModelTests {
         val mockRepo = mockk<UserRepository> {
             coEvery { refreshUser() } coAnswers { Resource.Error("") }
         }
-        val mockObserver = mockk<Observer<DetailsViewModel.LoginStatus>> {
+        val mockObserver = mockk<Observer<LoginStatus>> {
             every { onChanged(any()) } just Runs
         }
 
@@ -168,7 +169,7 @@ class DetailsViewModelTests {
         val mockRepo = mockk<UserRepository> {
             coEvery { refreshUser() } coAnswers { Resource.Error("") }
         }
-        val mockObserver = mockk<Observer<DetailsViewModel.LoginStatus>> {
+        val mockObserver = mockk<Observer<LoginStatus>> {
             every { onChanged(any()) } just Runs
         }
 
@@ -179,6 +180,6 @@ class DetailsViewModelTests {
             login()
         }
 
-        verify { mockObserver.onChanged(DetailsViewModel.LoginStatus.Error) }
+        verify { mockObserver.onChanged(LoginStatus.Error) }
     }
 }

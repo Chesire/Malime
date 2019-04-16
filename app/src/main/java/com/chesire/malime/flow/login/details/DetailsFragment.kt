@@ -46,10 +46,10 @@ class DetailsFragment : DaggerFragment() {
             viewLifecycleOwner,
             Observer { loginStatus ->
                 when (loginStatus) {
-                    DetailsViewModel.LoginStatus.EmptyUsername -> Timber.i("LoginStatus returned empty username")
-                    DetailsViewModel.LoginStatus.EmptyPassword -> Timber.i("LoginStatus returned empty password")
-                    DetailsViewModel.LoginStatus.Error -> Timber.i("LoginStatus returned error")
-                    DetailsViewModel.LoginStatus.Success -> {
+                    LoginStatus.EmptyUsername -> Timber.i("LoginStatus returned empty username")
+                    LoginStatus.EmptyPassword -> Timber.i("LoginStatus returned empty password")
+                    LoginStatus.Error -> Timber.i("LoginStatus returned error")
+                    LoginStatus.Success -> {
                         Timber.i("LoginStatus returned success")
                         findNavController().navigate(DetailsFragmentDirections.toSyncingFragment())
                     }

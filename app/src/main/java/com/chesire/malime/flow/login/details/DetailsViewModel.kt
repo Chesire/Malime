@@ -75,11 +75,4 @@ class DetailsViewModel @Inject constructor(
         super.onCleared()
         job.cancel()
     }
-
-    enum class LoginStatus {
-        EmptyUsername,
-        EmptyPassword,
-        Error,
-        Success
-    }
 }
