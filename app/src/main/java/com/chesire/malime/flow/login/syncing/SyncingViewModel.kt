@@ -19,10 +19,8 @@ import kotlin.coroutines.CoroutineContext
 
 class SyncingViewModel @Inject constructor(
     private val seriesRepo: SeriesRepository,
-    private val workerQueue: WorkerQueue,
     @IOContext private val ioContext: CoroutineContext
 ) : ViewModel() {
-
     private val job = Job()
     private val ioScope = CoroutineScope(job + ioContext)
     private val _syncStatus = MutableLiveData<AsyncState<Any, Any>>()
@@ -40,7 +38,6 @@ class SyncingViewModel @Inject constructor(
         if (syncCommands.any { it is Resource.Error }) {
             _syncStatus.postError(Any())
         } else {
-            workerQueue.enqueueSeriesRefresh()
             _syncStatus.postSuccess(Any())
         }
     }

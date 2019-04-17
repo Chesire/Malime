@@ -1,12 +1,10 @@
-package com.chesire.malime.flow.login
+package com.chesire.malime.flow.login.details
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
 import com.chesire.malime.core.Resource
 import com.chesire.malime.core.api.AuthApi
 import com.chesire.malime.core.models.UserModel
-import com.chesire.malime.flow.login.details.DetailsViewModel
-import com.chesire.malime.flow.login.details.LoginStatus
 import com.chesire.malime.repo.UserRepository
 import io.mockk.Runs
 import io.mockk.coEvery
