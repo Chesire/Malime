@@ -3,12 +3,15 @@ package com.chesire.malime
 import android.os.StrictMode
 import com.chesire.lifecyklelog.LifecykleLog
 import com.chesire.lifecyklelog.LogHandler
+import com.chesire.malime.injection.components.AppComponent
 import com.chesire.malime.injection.components.DaggerAppComponent
 import dagger.android.AndroidInjector
 import dagger.android.support.DaggerApplication
 import timber.log.Timber
 
 class MalimeApplication : DaggerApplication() {
+    lateinit var daggerComponent: AppComponent
+
     override fun onCreate() {
         super.onCreate()
 
@@ -30,6 +33,7 @@ class MalimeApplication : DaggerApplication() {
             .builder()
             .applicationContext(this)
             .build()
+            .also { daggerComponent = it }
     }
 
     private fun startStrictMode() {
