@@ -8,6 +8,7 @@ import com.chesire.malime.core.Resource
 import com.chesire.malime.injection.components.DaggerAppComponent
 import com.chesire.malime.repo.SeriesRepository
 import kotlinx.coroutines.Dispatchers
+import timber.log.Timber
 import javax.inject.Inject
 
 class RefreshSeriesWorker(
@@ -21,12 +22,15 @@ class RefreshSeriesWorker(
     init {
         // For now setup in the init block
         // dagger currently doesn't support androidInjection for workers
+        Timber.i("Initializing the RefreshSeriesWorker")
         if (appContext is MalimeApplication) {
             appContext.daggerComponent.inject(this)
         }
     }
 
     override suspend fun doWork(): Result {
+        Timber.i("doWork RefreshSeriesWorker")
+
         return if (listOf(repo.refreshAnime(), repo.refreshManga()).any { it is Resource.Error }) {
             Result.retry()
         } else {
