@@ -10,7 +10,6 @@ import com.chesire.malime.extensions.postError
 import com.chesire.malime.extensions.postLoading
 import com.chesire.malime.extensions.postSuccess
 import com.chesire.malime.repo.SeriesRepository
-import com.chesire.malime.services.WorkerQueue
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
