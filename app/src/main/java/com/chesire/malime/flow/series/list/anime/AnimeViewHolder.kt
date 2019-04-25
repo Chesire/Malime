@@ -26,7 +26,7 @@ class AnimeViewHolder(view: View) : RecyclerView.ViewHolder(view), LayoutContain
         adapterItemAnimeTitle.text = model.title
         adapterItemAnimeProgress.text = "${model.progress} / ${model.totalLength}"
         adapterItemAnimePlusOne.visibleIf(invisible = true) { model.progress < model.totalLength }
-        ViewCompat.setTransitionName(adapterItemAnimeImage, model.title);
+        ViewCompat.setTransitionName(adapterItemAnimeImage, model.title)
     }
 
     fun bindListener(listener: AnimeInteractionListener) {
