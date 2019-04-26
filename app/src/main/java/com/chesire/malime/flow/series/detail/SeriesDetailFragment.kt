@@ -15,6 +15,7 @@ import com.chesire.lifecyklelog.LogLifecykle
 import com.chesire.malime.databinding.FragmentSeriesDetailBinding
 import com.chesire.malime.flow.ViewModelFactory
 import dagger.android.support.DaggerFragment
+import kotlinx.android.synthetic.main.fragment_series_detail.fragmentSeriesDetailCollapsingToolbar
 import kotlinx.android.synthetic.main.fragment_series_detail.fragmentSeriesDetailHeaderImage
 import kotlinx.android.synthetic.main.fragment_series_detail.fragmentSeriesDetailImageView
 import kotlinx.android.synthetic.main.fragment_series_detail.fragmentSeriesDetailToolbar
@@ -58,6 +59,8 @@ class SeriesDetailFragment : DaggerFragment() {
             activity.setSupportActionBar(fragmentSeriesDetailToolbar)
             activity.supportActionBar?.setDisplayHomeAsUpEnabled(true)
         }
+
+        fragmentSeriesDetailCollapsingToolbar.title = args.series.title
 
         fragmentSeriesDetailImageView.transitionName = args.series.title
         Glide.with(this)
