@@ -6,4 +6,6 @@
     <string name="nav_profile">Profile</string>
     <string name="nav_activity">Activity</string>
     <string name="nav_settings">Settings</string>
+
+    <string name="menu_delete">Delete</string>
 </resources>

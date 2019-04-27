@@ -2,6 +2,8 @@ package com.chesire.malime.flow.series.detail
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +14,7 @@ import androidx.navigation.fragment.navArgs
 import androidx.transition.TransitionInflater
 import com.bumptech.glide.Glide
 import com.chesire.lifecyklelog.LogLifecykle
+import com.chesire.malime.R
 import com.chesire.malime.databinding.FragmentSeriesDetailBinding
 import com.chesire.malime.flow.ViewModelFactory
 import dagger.android.support.DaggerFragment
@@ -71,6 +74,11 @@ class SeriesDetailFragment : DaggerFragment() {
             .into(fragmentSeriesDetailHeaderImage)
     }
 
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.menu_series_detail, menu)
+    }
+
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel.model = args.series
@@ -79,6 +87,7 @@ class SeriesDetailFragment : DaggerFragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             android.R.id.home -> findNavController().navigateUp()
+            R.id.menuSeriesDetailDelete -> viewModel.deleteSeries()
         }
         return super.onOptionsItemSelected(item)
     }
