@@ -64,7 +64,6 @@ class SeriesDetailFragment : DaggerFragment() {
         }
 
         fragmentSeriesDetailCollapsingToolbar.title = args.series.title
-
         fragmentSeriesDetailImageView.transitionName = args.series.title
         Glide.with(this)
             .load(args.series.posterImage.smallest?.url)
