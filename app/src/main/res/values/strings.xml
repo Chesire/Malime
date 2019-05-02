@@ -9,4 +9,11 @@
 
     <string name="menu_delete">Delete</string>
     <string name="menu_filter">Filter</string>
+    <string name="menu_sort">Sort</string>
+
+    <string name="sort_dialog_title">Sort by</string>
+    <string name="sort_by_default">Default</string>
+    <string name="sort_by_title">Title</string>
+    <string name="sort_by_start_date">Start date</string>
+    <string name="sort_by_end_date">End date</string>
 </resources>

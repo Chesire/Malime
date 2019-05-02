@@ -14,11 +14,15 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.lifecycle.lifecycleOwner
+import com.afollestad.materialdialogs.list.listItems
 import com.chesire.lifecyklelog.LogLifecykle
 import com.chesire.malime.R
 import com.chesire.malime.core.models.SeriesModel
 import com.chesire.malime.databinding.FragmentAnimeBinding
 import com.chesire.malime.flow.ViewModelFactory
+import com.chesire.malime.flow.series.SortOption
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_anime.fragmentAnimeToolbar
 import timber.log.Timber
@@ -88,6 +92,17 @@ class AnimeFragment : DaggerFragment(), AnimeInteractionListener {
         when (item.itemId) {
             R.id.menuSeriesListFilter -> {
                 // show filter dialog?
+            }
+            R.id.menuSeriesListSort -> {
+                val map = SortOption.values().associate { getString(it.stringId) to it.index }
+                MaterialDialog(requireContext()).show {
+                    title(R.string.sort_dialog_title)
+                    listItems(items = map.keys.toList()) { _, _, text ->
+                        val selected = map[text]
+                        // set into sharedpref
+                    }
+                    lifecycleOwner(viewLifecycleOwner)
+                }
             }
         }
         return super.onOptionsItemSelected(item)
