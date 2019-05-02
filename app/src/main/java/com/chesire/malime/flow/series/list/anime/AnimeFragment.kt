@@ -2,19 +2,25 @@ package com.chesire.malime.flow.series.list.anime
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.chesire.lifecyklelog.LogLifecykle
+import com.chesire.malime.R
 import com.chesire.malime.core.models.SeriesModel
 import com.chesire.malime.databinding.FragmentAnimeBinding
 import com.chesire.malime.flow.ViewModelFactory
 import dagger.android.support.DaggerFragment
+import kotlinx.android.synthetic.main.fragment_anime.fragmentAnimeToolbar
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -28,6 +34,11 @@ class AnimeFragment : DaggerFragment(), AnimeInteractionListener {
         ViewModelProviders
             .of(this, viewModelFactory)
             .get(AnimeViewModel::class.java)
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
     }
 
     override fun onCreateView(
@@ -51,6 +62,12 @@ class AnimeFragment : DaggerFragment(), AnimeInteractionListener {
             .root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        (activity as? AppCompatActivity)?.setSupportActionBar(fragmentAnimeToolbar)
+    }
+
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel.animeSeries.observe(
@@ -60,6 +77,20 @@ class AnimeFragment : DaggerFragment(), AnimeInteractionListener {
                 animeAdapter.loadItems(it)
             }
         )
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.menu_series_list, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.menuSeriesListFilter -> {
+                // show filter dialog?
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     override fun animeSelected(imageView: ImageView, model: SeriesModel) {

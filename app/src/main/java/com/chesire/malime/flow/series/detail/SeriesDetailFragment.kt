@@ -73,14 +73,14 @@ class SeriesDetailFragment : DaggerFragment() {
             .into(fragmentSeriesDetailHeaderImage)
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        super.onCreateOptionsMenu(menu, inflater)
-        inflater.inflate(R.menu.menu_series_detail, menu)
-    }
-
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel.model = args.series
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.menu_series_detail, menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
