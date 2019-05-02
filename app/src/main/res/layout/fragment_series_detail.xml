@@ -63,7 +63,7 @@
                 <ImageView
                     android:id="@+id/fragmentSeriesDetailImageView"
                     android:layout_width="100dp"
-                    android:layout_height="100dp"
+                    android:layout_height="145dp"
                     android:layout_gravity="center"
                     android:layout_margin="16dp"
                     app:layout_constraintBottom_toBottomOf="parent"
