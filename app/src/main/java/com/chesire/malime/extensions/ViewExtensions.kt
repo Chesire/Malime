@@ -4,7 +4,7 @@ import android.animation.Animator
 import android.view.View
 
 /**
- * Hides the [View], animating its alpha from to 0.0f.
+ * Hides the [View], animating its alpha to 0.0f.
  */
 fun View.hide(invisible: Boolean = false) {
     animate()
