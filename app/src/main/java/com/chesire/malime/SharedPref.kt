@@ -71,9 +71,9 @@ class SharedPref @Inject constructor(
     }
 
     /**
-     * Unsubscribe to changes in the [SharedPreferences].
+     * Unsubscribe from changes in the [SharedPreferences].
      */
-    fun unsubscribeToChanges(changeListener: SharedPreferences.OnSharedPreferenceChangeListener) {
+    fun unsubscribeFromChanges(changeListener: SharedPreferences.OnSharedPreferenceChangeListener) {
         sharedPreferences.unregisterOnSharedPreferenceChangeListener(changeListener)
     }
 

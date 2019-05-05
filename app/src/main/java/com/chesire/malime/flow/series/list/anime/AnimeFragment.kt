@@ -102,7 +102,7 @@ class AnimeFragment :
     }
 
     override fun onStop() {
-        sharedPref.unsubscribeToChanges(this)
+        sharedPref.unsubscribeFromChanges(this)
         super.onStop()
     }
 
