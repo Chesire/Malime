@@ -8,9 +8,6 @@ import com.squareup.moshi.Moshi
 import com.squareup.moshi.Types
 import javax.inject.Inject
 
-private const val SORT_PREFERENCE = "preference.sort"
-private const val FILTER_PREFERENCE = "preference.filter"
-
 /**
  * Provides a wrapper around the [SharedPreferences] to aid with getting and setting values into it.
  */
@@ -59,4 +56,23 @@ class SharedPref @Inject constructor(
         set(value) = sharedPreferences.edit {
             putString(FILTER_PREFERENCE, filterAdapter.toJson(value))
         }
+
+    /**
+     * Subscribe to changes in the [SharedPreferences].
+     */
+    fun subscribeToChanges(changeListener: SharedPreferences.OnSharedPreferenceChangeListener) {
+        sharedPreferences.registerOnSharedPreferenceChangeListener(changeListener)
+    }
+
+    /**
+     * Unsubscribe to changes in the [SharedPreferences].
+     */
+    fun unsubscribeToChanges(changeListener: SharedPreferences.OnSharedPreferenceChangeListener) {
+        sharedPreferences.unregisterOnSharedPreferenceChangeListener(changeListener)
+    }
+
+    companion object {
+        const val SORT_PREFERENCE = "preference.sort"
+        const val FILTER_PREFERENCE = "preference.filter"
+    }
 }

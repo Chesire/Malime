@@ -1,5 +1,6 @@
 package com.chesire.malime.flow.series.list.anime
 
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.Menu
@@ -16,6 +17,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.chesire.lifecyklelog.LogLifecykle
 import com.chesire.malime.R
+import com.chesire.malime.SharedPref
 import com.chesire.malime.core.models.SeriesModel
 import com.chesire.malime.databinding.FragmentAnimeBinding
 import com.chesire.malime.flow.DialogHandler
@@ -26,11 +28,17 @@ import timber.log.Timber
 import javax.inject.Inject
 
 @LogLifecykle
-class AnimeFragment : DaggerFragment(), AnimeInteractionListener {
+class AnimeFragment :
+    DaggerFragment(),
+    AnimeInteractionListener,
+    SharedPreferences.OnSharedPreferenceChangeListener {
+
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
     @Inject
     lateinit var dialogHandler: DialogHandler
+    @Inject
+    lateinit var sharedPref: SharedPref
     private lateinit var animeAdapter: AnimeAdapter
 
     private val viewModel by lazy {
@@ -49,7 +57,7 @@ class AnimeFragment : DaggerFragment(), AnimeInteractionListener {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        animeAdapter = AnimeAdapter(this)
+        animeAdapter = AnimeAdapter(this, sharedPref)
 
         return FragmentAnimeBinding.inflate(inflater, container, false)
             .apply {
@@ -82,9 +90,19 @@ class AnimeFragment : DaggerFragment(), AnimeInteractionListener {
         )
     }
 
+    override fun onStart() {
+        super.onStart()
+        sharedPref.subscribeToChanges(this)
+    }
+
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.menu_series_list, menu)
+    }
+
+    override fun onStop() {
+        sharedPref.unsubscribeToChanges(this)
+        super.onStop()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -109,5 +127,12 @@ class AnimeFragment : DaggerFragment(), AnimeInteractionListener {
     override fun onPlusOne(model: SeriesModel) {
         Timber.i("Model ${model.slug} onPlusOne called")
         viewModel.updateSeries(model.userId, model.progress.inc(), model.userSeriesStatus)
+    }
+
+    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
+        when (key) {
+            SharedPref.FILTER_PREFERENCE -> animeAdapter.performFilter()
+            SharedPref.SORT_PREFERENCE -> animeAdapter.performSort()
+        }
     }
 }
