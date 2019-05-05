@@ -27,6 +27,7 @@ import kotlinx.android.synthetic.main.fragment_anime.fragmentAnimeToolbar
 import timber.log.Timber
 import javax.inject.Inject
 
+@Suppress("TooManyFunctions")
 @LogLifecykle
 class AnimeFragment :
     DaggerFragment(),
