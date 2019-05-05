@@ -22,7 +22,6 @@ class AnimeAdapter(
         set(value) {
             field = value
             performFilter()
-            performSort()
         }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AnimeViewHolder {
@@ -39,7 +38,8 @@ class AnimeAdapter(
     }
 
     /**
-     * Filters the displayed values based on the value set into the shared preferences.
+     * Filters the displayed values based on the value set into the shared preferences. After
+     * performing the filter it will then sort the values based on the sort option.
      */
     fun performFilter() {
         val filterOptions = sharedPref.filterPreference
@@ -47,7 +47,8 @@ class AnimeAdapter(
             filterOptions[it.userSeriesStatus.index] ?: false
         }
 
-        notifyDataSetChanged()
+        // Sort all the new entries again
+        performSort()
     }
 
     /**
