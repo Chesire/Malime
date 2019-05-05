@@ -3,6 +3,7 @@ package com.chesire.malime.flow.login.syncing
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
 import com.chesire.malime.AsyncState
+import com.chesire.malime.CoroutinesMainDispatcherRule
 import com.chesire.malime.core.Resource
 import com.chesire.malime.repo.SeriesRepository
 import io.mockk.Runs
@@ -20,8 +21,9 @@ import org.junit.Test
 @ExperimentalCoroutinesApi
 class SyncingViewModelTests {
     @get:Rule
-    val rule = InstantTaskExecutorRule()
-    private val testDispatcher = Dispatchers.Unconfined
+    val taskExecutorRule = InstantTaskExecutorRule()
+    @get:Rule
+    val coroutineRule = CoroutinesMainDispatcherRule()
 
     @Test
     fun `syncLatestData refreshAnime failure posts error`() = runBlocking {
@@ -33,7 +35,7 @@ class SyncingViewModelTests {
             every { onChanged(any()) } just Runs
         }
 
-        SyncingViewModel(mockRepo, testDispatcher).run {
+        SyncingViewModel(mockRepo).run {
             syncStatus.observeForever(mockObserver)
             syncLatestData()
             assertTrue(syncStatus.value is AsyncState.Error)
@@ -50,7 +52,7 @@ class SyncingViewModelTests {
             every { onChanged(any()) } just Runs
         }
 
-        SyncingViewModel(mockRepo, testDispatcher).run {
+        SyncingViewModel(mockRepo).run {
             syncStatus.observeForever(mockObserver)
             syncLatestData()
             assertTrue(syncStatus.value is AsyncState.Error)
@@ -67,7 +69,7 @@ class SyncingViewModelTests {
             every { onChanged(any()) } just Runs
         }
 
-        SyncingViewModel(mockRepo, testDispatcher).run {
+        SyncingViewModel(mockRepo).run {
             syncStatus.observeForever(mockObserver)
             syncLatestData()
             assertTrue(syncStatus.value is AsyncState.Success)

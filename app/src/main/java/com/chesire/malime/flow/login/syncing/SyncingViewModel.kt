@@ -3,6 +3,7 @@ package com.chesire.malime.flow.login.syncing
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.chesire.malime.AsyncState
 import com.chesire.malime.IOContext
 import com.chesire.malime.core.Resource
@@ -17,16 +18,13 @@ import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext
 
 class SyncingViewModel @Inject constructor(
-    private val seriesRepo: SeriesRepository,
-    @IOContext private val ioContext: CoroutineContext
+    private val seriesRepo: SeriesRepository
 ) : ViewModel() {
-    private val job = Job()
-    private val ioScope = CoroutineScope(job + ioContext)
     private val _syncStatus = MutableLiveData<AsyncState<Any, Any>>()
     val syncStatus: LiveData<AsyncState<Any, Any>>
         get() = _syncStatus
 
-    fun syncLatestData() = ioScope.launch {
+    fun syncLatestData() = viewModelScope.launch {
         _syncStatus.postLoading()
 
         val syncCommands = listOf(
@@ -39,10 +37,5 @@ class SyncingViewModel @Inject constructor(
         } else {
             _syncStatus.postSuccess(Any())
         }
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        job.cancel()
     }
 }
