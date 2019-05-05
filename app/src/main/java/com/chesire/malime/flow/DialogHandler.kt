@@ -33,6 +33,7 @@ class DialogHandler @Inject constructor(
             ) { _, _, items ->
                 pref.filterPreference = createFilterMap(filterOptionMap, items)
             }
+            negativeButton(R.string.filter_dialog_cancel)
             positiveButton(R.string.filter_dialog_confirm)
             lifecycleOwner(lifecycleOwner)
         }

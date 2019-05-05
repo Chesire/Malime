@@ -2,6 +2,7 @@ package com.chesire.malime
 
 import android.content.SharedPreferences
 import androidx.core.content.edit
+import com.chesire.malime.core.flags.UserSeriesStatus
 import com.chesire.malime.flow.series.SortOption
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.Types
@@ -28,6 +29,17 @@ class SharedPref @Inject constructor(
             )
     }
 
+    private val defaultFilter by lazy {
+        filterAdapter.toJson(
+            UserSeriesStatus
+                .values()
+                .filterNot { it == UserSeriesStatus.Unknown }
+                .associate {
+                    it.index to (it.index == 0)
+                }
+        )
+    }
+
     var sortPreference: SortOption
         get() = SortOption.forIndex(
             sharedPreferences.getInt(
@@ -41,12 +53,8 @@ class SharedPref @Inject constructor(
 
     var filterPreference: Map<Int, Boolean>
         get() {
-            val filterString = sharedPreferences.getString(FILTER_PREFERENCE, "")
-            return if (filterString.isNullOrEmpty()) {
-                emptyMap()
-            } else {
-                filterAdapter.fromJson(filterString) ?: emptyMap()
-            }
+            val filterJson = sharedPreferences.getString(FILTER_PREFERENCE, defaultFilter)!!
+            return filterAdapter.fromJson(filterJson) ?: emptyMap()
         }
         set(value) = sharedPreferences.edit {
             putString(FILTER_PREFERENCE, filterAdapter.toJson(value))
