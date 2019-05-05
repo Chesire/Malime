@@ -15,8 +15,6 @@ import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.just
 import io.mockk.mockk
-import io.mockk.verify
-import kotlinx.coroutines.Dispatchers
 import org.junit.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test
@@ -39,7 +37,7 @@ class SearchViewModelTests {
             searchResults.observeForever(mockObserver)
             performSearch()
 
-            verify { mockObserver.onChanged(any<AsyncState.Error<List<SeriesModel>, SearchError>>()) }
+            assertEquals(SearchError.MissingTitle, (searchResults.value as AsyncState.Error).error)
         }
     }
 
@@ -103,7 +101,7 @@ class SearchViewModelTests {
             seriesType = SeriesType.Anime
             performSearch()
 
-            verify { mockObserver.onChanged(any<AsyncState.Success<List<SeriesModel>, SearchError>>()) }
+            assertEquals(expected, (searchResults.value as AsyncState.Success).data)
         }
     }
 }

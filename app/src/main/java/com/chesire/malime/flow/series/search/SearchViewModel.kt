@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.chesire.malime.AsyncState
-import com.chesire.malime.MainContext
 import com.chesire.malime.core.Resource
 import com.chesire.malime.core.api.SearchApi
 import com.chesire.malime.core.flags.SeriesType
@@ -17,13 +16,11 @@ import com.chesire.malime.extensions.postSuccess
 import com.chesire.malime.repo.SeriesRepository
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-import kotlin.coroutines.CoroutineContext
 
 class SearchViewModel @Inject constructor(
     private val repo: SeriesRepository,
     private val search: SearchApi
 ) : ViewModel() {
-
     private val _searchResults = MutableLiveData<AsyncState<List<SeriesModel>, SearchError>>()
 
     val searchTitle = MutableLiveData<String>()
