@@ -16,6 +16,9 @@ import javax.inject.Inject
 class DialogHandler @Inject constructor(
     private val pref: SharedPref
 ) {
+    /**
+     * Shows the filter dialog, allowing the user to choose how to filter their series.
+     */
     fun showFilterDialog(context: Context, lifecycleOwner: LifecycleOwner) {
         val filterOptionMap = UserSeriesStatus
             .values()
@@ -44,6 +47,9 @@ class DialogHandler @Inject constructor(
         }
     }
 
+    /**
+     * Shows the sort dialog, allowing the user to choose how the series list is sorted.
+     */
     fun showSortDialog(context: Context, lifecycleOwner: LifecycleOwner) {
         val sortOptionMap = SortOption
             .values()
