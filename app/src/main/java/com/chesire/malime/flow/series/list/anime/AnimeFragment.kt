@@ -85,7 +85,7 @@ class AnimeFragment :
             viewLifecycleOwner,
             Observer {
                 Timber.d("Anime has been updated, new count [${it.count()}]")
-                animeAdapter.loadItems(it)
+                animeAdapter.allItems = it
             }
         )
     }

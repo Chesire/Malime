@@ -13,16 +13,17 @@ class AnimeAdapter(
     private val sharedPref: SharedPref
 ) : RecyclerView.Adapter<AnimeViewHolder>() {
 
-    private var allItems = emptyList<SeriesModel>()
     private var displayedItems = emptyList<SeriesModel>()
 
-    fun loadItems(items: List<SeriesModel>) {
-        allItems = items
-        performFilter()
-        performSort()
-
-        notifyDataSetChanged()
-    }
+    /**
+     * List of all series items.
+     */
+    var allItems: List<SeriesModel> = emptyList()
+        set(value) {
+            field = value
+            performFilter()
+            performSort()
+        }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AnimeViewHolder {
         return AnimeViewHolder(
@@ -37,6 +38,9 @@ class AnimeAdapter(
         holder.bindListener(listener)
     }
 
+    /**
+     * Filters the displayed values based on the value set into the shared preferences.
+     */
     fun performFilter() {
         val filterOptions = sharedPref.filterPreference
         displayedItems = allItems.filter {
@@ -46,6 +50,9 @@ class AnimeAdapter(
         notifyDataSetChanged()
     }
 
+    /**
+     * Sorts the displayed items based on the value set into the shared preferences.
+     */
     fun performSort() {
         displayedItems = displayedItems
             .sortedWith(

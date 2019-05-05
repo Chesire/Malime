@@ -37,6 +37,9 @@ class SharedPref @Inject constructor(
         )
     }
 
+    /**
+     * Preference value for the sort option.
+     */
     var sortPreference: SortOption
         get() = SortOption.forIndex(
             sharedPreferences.getInt(
@@ -48,6 +51,9 @@ class SharedPref @Inject constructor(
             putInt(SORT_PREFERENCE, value.index)
         }
 
+    /**
+     * Preference value for the filter options.
+     */
     var filterPreference: Map<Int, Boolean>
         get() {
             val filterJson = sharedPreferences.getString(FILTER_PREFERENCE, defaultFilter)!!
