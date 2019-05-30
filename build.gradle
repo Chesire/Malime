@@ -1,5 +1,5 @@
 buildscript {
-    ext.dagger_version = '2.16'
+    ext.dagger_version = '2.23'
     ext.dokka_version = '0.9.16'
     ext.glide_version = "4.8.0"
     ext.jacoco_version = '0.8.2'
