@@ -100,7 +100,7 @@ dependencies {
 
     implementation 'com.mikepenz:aboutlibraries:6.2.3'
 
-    implementation 'com.vanniktech:lint-rules-android:0.9.0'
+    implementation 'com.vanniktech:lint-rules-android:0.12.0'
     implementation 'com.vanniktech:lint-rules-rxjava2:0.9.0'
     implementation 'nl.littlerobots.rxlint:rxlint:1.7.3'
 
