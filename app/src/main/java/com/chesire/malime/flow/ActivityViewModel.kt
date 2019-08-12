@@ -6,7 +6,6 @@ import androidx.lifecycle.viewModelScope
 import com.chesire.malime.IOContext
 import com.chesire.malime.LogoutHandler
 import com.chesire.malime.R
-import com.chesire.malime.SharedPref
 import com.chesire.malime.kitsu.AuthProvider
 import com.chesire.malime.repo.UserRepository
 import kotlinx.coroutines.launch
@@ -20,7 +19,6 @@ import kotlin.coroutines.CoroutineContext
  */
 class ActivityViewModel @Inject constructor(
     private val authProvider: AuthProvider,
-    private val sharedPref: SharedPref,
     private val logoutHandler: LogoutHandler,
     @IOContext private val ioContext: CoroutineContext,
     userRepository: UserRepository
