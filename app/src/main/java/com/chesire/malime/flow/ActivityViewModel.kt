@@ -37,11 +37,7 @@ class ActivityViewModel @Inject constructor(
         @IdRes
         get() {
             return if (authProvider.accessToken.isEmpty()) {
-                if (sharedPref.isAnalyticsComplete) {
-                    R.id.detailsFragment
-                } else {
-                    R.id.analyticsFragment
-                }
+                R.id.detailsFragment
             } else {
                 R.id.animeFragment
             }
