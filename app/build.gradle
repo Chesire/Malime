@@ -125,7 +125,7 @@ dependencies {
     androidTestImplementation 'org.objenesis:objenesis:2.6'
 
     kapt "androidx.room:room-compiler:$room_version"
-    kapt 'com.github.bumptech.glide:compiler:4.9.0'
+    kapt 'com.github.bumptech.glide:compiler:4.10.0'
     kapt "com.google.dagger:dagger-compiler:$dagger_version"
     kapt "com.google.dagger:dagger-android-processor:$dagger_version"
     kaptAndroidTest "com.google.dagger:dagger-compiler:$dagger_version"
