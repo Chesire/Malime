@@ -34,7 +34,7 @@ class TrendingAdapterTests {
         val response = TrendingResponse(responseData)
 
         val classUnderTest = TrendingAdapter()
-        val actual = classUnderTest.seriesModelsFromTrendingResponse(response).first()
+        val actual = classUnderTest.modelsFromResponse(response).first()
 
         // Ensure that the expected data exists in the SeriesModel
         assertEquals(0, actual.id)
