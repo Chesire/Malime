@@ -9,6 +9,5 @@ import com.squareup.moshi.FromJson
  */
 class TrendingAdapter {
     @FromJson
-    fun seriesModelsFromTrendingResponse(response: TrendingResponse) =
-        response.data.convertToSeriesModels()
+    fun modelsFromResponse(response: TrendingResponse) = response.data.convertToSeriesModels()
 }

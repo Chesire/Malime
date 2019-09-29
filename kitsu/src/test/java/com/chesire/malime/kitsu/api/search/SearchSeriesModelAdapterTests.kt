@@ -36,7 +36,7 @@ class SearchSeriesModelAdapterTests {
         val response = SearchResponse(responseData, responseLinks)
 
         val classUnderTest = SearchSeriesModelAdapter()
-        val actual = classUnderTest.seriesModelsFromSearchResponse(response).first()
+        val actual = classUnderTest.modelsFromResponse(response).first()
 
         // Ensure that the expected data exists in the SeriesModel
         assertEquals(0, actual.id)

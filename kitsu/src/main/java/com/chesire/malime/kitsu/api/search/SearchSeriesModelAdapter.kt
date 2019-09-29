@@ -5,6 +5,5 @@ import com.squareup.moshi.FromJson
 
 class SearchSeriesModelAdapter {
     @FromJson
-    fun seriesModelsFromSearchResponse(response: SearchResponse) =
-        response.data.convertToSeriesModels()
+    fun modelsFromResponse(response: SearchResponse) = response.data.convertToSeriesModels()
 }

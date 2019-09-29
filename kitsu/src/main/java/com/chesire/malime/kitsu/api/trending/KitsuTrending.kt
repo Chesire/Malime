@@ -10,6 +10,7 @@ import javax.inject.Inject
  * Provides an implementation of [TrendingApi] to interact with [KitsuTrendingService] to pull
  * trending data.
  */
+@Suppress("TooGenericExceptionCaught")
 class KitsuTrending @Inject constructor(
     private val trendingService: KitsuTrendingService
 ) : TrendingApi {
