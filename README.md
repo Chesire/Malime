@@ -1,5 +1,11 @@
 # Malime
 
+
+
+## All ongoing work was being done on a v2 branch, this has since has been moved to a new repo at [Nekome](https://github.com/Chesire/Nekome)
+
+
+
 [![Build Status](https://app.bitrise.io/app/b9a83a0271f20f47/status.svg?token=5iXkOtZfs29XH4IaFFwYSQ&branch=master)](https://app.bitrise.io/app/b9a83a0271f20f47)
 [![codebeat badge](https://codebeat.co/badges/165302be-dea8-41c8-9d6e-1830f59183bb)](https://codebeat.co/projects/github-com-chesire-malime-master)
 
@@ -7,6 +13,7 @@ Malime is an open source Android application to track your Anime & Manga progres
 [<img src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png"
       alt="Download from Google Play"
       height="80">](https://play.google.com/store/apps/details?id=com.chesire.malime)
+      
 
 [//]: # (Add pictures of the app 1 - 3)
 
@@ -61,6 +68,3 @@ To run the UI tests:
 ## Why
 There are already some really great Android tracking apps for Anime tracking portals, so why make another one?  
 Originally this was a testing area to mess around with a bunch of Kotlin tools and mess around with the MyAnimeList API, but after a while it made sense to just make it into a proper application.
-
-## Note
-All ongoing work is done against the v2 branch.
